@@ -1,6 +1,5 @@
 package com.hubtech.repository;
 
-import com.hubtech.model.BlogPost;
 import com.hubtech.model.Comment;
 
 public interface CommentRepository {
