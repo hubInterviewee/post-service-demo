@@ -16,10 +16,10 @@ public class InterviewDemoTest {
 	 *             http://localhost:8080/getAllBlogs to see blog with no comments
 	 *             run this method make another call to
 	 *             http://localhost:8080/getAllBlogs to verify comment addition
-	 * @throws JsonProcessingException
+	 * 
 	 * 
 	 */
-	public static void main(String[] args) throws JsonProcessingException {
+	public static void main(String[] args){
 		Comment newComment = new Comment("test", "testComment", "Confessions of a Software Engineer", "akanoa");
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<String> response = rt.exchange("http://localhost:8080/addComment", HttpMethod.POST,
