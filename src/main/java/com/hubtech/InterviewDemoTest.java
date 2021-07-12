@@ -5,7 +5,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.hubtech.model.Comment;
 
 public class InterviewDemoTest {
@@ -19,7 +18,7 @@ public class InterviewDemoTest {
 	 * 
 	 * 
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		Comment newComment = new Comment("test", "testComment", "Confessions of a Software Engineer", "akanoa");
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<String> response = rt.exchange("http://localhost:8080/addComment", HttpMethod.POST,
