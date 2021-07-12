@@ -22,12 +22,12 @@ import com.hubtech.repository.CommentRepositoryImpl;
 @RestController
 public class BlogService {
 	// TODO: Autowire repo objects to take advantage of spring dependency injection
-	//TODO: Add integration testing framework like cucumber
-	//TODO: Add api spec for documentation
+	// TODO: Add integration testing framework like cucumber
+	// TODO: Add api spec for documentation
+	// TODO: Add method to update blogs and comments
 	private BlogRepository blogRepo = new BlogRepositoryImpl();
 	private CommentRepository commentRepo = new CommentRepositoryImpl();
-	//for demonstration
-	
+
 	@GetMapping("/getBlogById/{id}")
 	public @ResponseBody ResponseEntity<?> getBlogById(@PathVariable String id) {
 		BlogPost retVal = blogRepo.get(id);
@@ -47,23 +47,22 @@ public class BlogService {
 	@PostMapping("/createBlog")
 	public @ResponseBody ResponseEntity<?> createBlog(@RequestBody BlogPost blog) {
 		ResponseEntity<?> retVal = null;
-		if (blog == null ||blog.getTitle() == null || blogRepo.get(blog.getTitle()) != null) {
+		if (blog == null || blog.getTitle() == null || blogRepo.get(blog.getTitle()) != null) {
 			retVal = new ResponseEntity<String>("cannot create blog with null or duplicate id", HttpStatus.BAD_REQUEST);
 		}
 		blogRepo.save(blog);
 		return retVal == null ? new ResponseEntity<BlogPost>(blog, HttpStatus.ACCEPTED) : retVal;
 	}
-	
+
 	@GetMapping("/getAllBlogs")
 	public @ResponseBody ResponseEntity<?> getAllBlogs() {
-
+		// for demonstration
 		addDefaultBlog();
 		List<BlogPost> retVal = blogRepo.getAll();
 
 		return retVal.size() != 0 ? new ResponseEntity<List<BlogPost>>(retVal, HttpStatus.OK)
 				: new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
 	}
-	
 
 	@RequestMapping("/addComment")
 	public @ResponseBody ResponseEntity<?> addComment(@RequestBody Comment comment) {
@@ -72,19 +71,19 @@ public class BlogService {
 		BlogPost blog = blogRepo.get(blogId);
 		if (blogId == null || blog == null) {
 			retVal = new ResponseEntity<String>("cannot find blog id", HttpStatus.NOT_FOUND);
-		}else {
-		blog.getComments().add(comment);
-		blogRepo.save(blog);
+		} else {
+			blog.getComments().add(comment);
+			blogRepo.save(blog);
 		}
 		return retVal == null ? new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED) : retVal;
 	}
-	
-	//this is a hack for demonstration purposes	- adds a blog if there is none
+
+	// this is a hack for demonstration purposes - adds a blog if there is none
 	private void addDefaultBlog() {
 		BlogPost testBlog = new BlogPost("Confessions of a Software Engineer", "Everyone wants me to build an app");
-		if(blogRepo.getAll().size() == 0) {	
-		createBlog(testBlog);
+		if (blogRepo.getAll().size() == 0) {
+			createBlog(testBlog);
 		}
-		
+
 	}
 }

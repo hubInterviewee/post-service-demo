@@ -7,7 +7,6 @@ public class Comment {
 	private String userId;
 	
 	public Comment(String id, String body, String blogTitle, String userId) {
-		super();
 		this.id = id;
 		this.body = body;
 		this.blogTitle = blogTitle;
